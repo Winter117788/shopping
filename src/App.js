@@ -39,11 +39,14 @@ function App() {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
+  // 计算购物车中所有商品的总数量
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <Router>
       <div>
-        {/* 导航栏，显示购物车商品数量 */}
-        <Navbar cartCount={cartItems.length} />
+        {/* 导航栏，显示购物车商品总数量 */}
+        <Navbar cartCount={cartCount} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* 商店页面 */}

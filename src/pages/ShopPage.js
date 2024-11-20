@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ProductCard';  // 引入商品卡片组件
-import './ShopPage.css'; // 引入 CSS 文件
+import React, { useEffect, useState } from 'react';  
+import ProductCard from '../components/ProductCard';  
+import './ShopPage.css'; 
 
-function ShopPage({ addToCart }) {
+function ShopPage({ addToCart, cartItems = [] }) {  // 确保 cartItems 默认是空数组
+
   const [products, setProducts] = useState([]);  // 用来存储商品数据
 
   useEffect(() => {
@@ -12,11 +13,15 @@ function ShopPage({ addToCart }) {
       .then((data) => setProducts(data));  // 将商品数据存储到状态中
   }, []);  // 空依赖数组表示组件第一次渲染时会执行这个副作用
 
+  // 计算购物车里商品的总数量
+  const totalQuantity = Array.isArray(cartItems)
+    ? cartItems.reduce((total, item) => total + item.quantity, 0)
+    : 0;
+
   return (
     <div>
       <h1>Shop</h1>
       <div className="product-list">
-        {/* 遍历商品数组并渲染商品卡片 */}
         {products.map((product) => (
           <ProductCard key={product.id} product={product} addToCart={addToCart} />
         ))}
