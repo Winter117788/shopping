@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // �
 import HomePage from './pages/HomePage'; // 引入主页组件
 import ShopPage from './pages/ShopPage'; // 引入商店页面组件
 import Navbar from './components/Navbar'; // 引入导航栏组件
-import Cart from './components/Cart';
+import Cart from './components/Cart'; // 引入购物车组件
 import { useState } from 'react';
 
 function App() {
@@ -10,11 +10,37 @@ function App() {
 
   // 添加商品到购物车
   const addToCart = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]); // 将商品添加到购物车中
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + product.quantity }
+            : item
+        );
+      }
+      return [...prevItems, product];
+    });
+  };
+
+  // 更新商品数量
+  const updateQuantity = (id, change) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity + change }
+          : item
+      ).filter((item) => item.quantity > 0) // 过滤掉数量为 0 的商品
+    );
+  };
+
+  // 删除商品
+  const removeItem = (id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   return (
-    <Router> {/* 确保这里使用 Router 包裹整个应用 */}
+    <Router>
       <div>
         {/* 导航栏，显示购物车商品数量 */}
         <Navbar cartCount={cartItems.length} />
@@ -23,7 +49,7 @@ function App() {
           {/* 商店页面 */}
           <Route path="/shop" element={<ShopPage addToCart={addToCart} />} />
           {/* 购物车页面 */}
-          <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+          <Route path="/cart" element={<Cart cartItems={cartItems} updateQuantity={updateQuantity} removeItem={removeItem} />} />
         </Routes>
       </div>
     </Router>

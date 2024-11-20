@@ -1,0 +1,20 @@
+nav {
+    display: flex;
+    justify-content: left; /* 水平居中 */
+    gap: 15px; /* 设置每个链接之间的间距 */
+  }
+  
+nav a {
+    text-decoration: none; /* 移除下划线 */
+    color: #333; /* 链接颜色 */
+    padding: 8px 12px; /* 内边距 */
+    border: 1px solid transparent; /* 默认没有边框 */
+    border-radius: 5px; /* 圆角按钮效果 */
+    transition: background-color 0.3s, border-color 0.3s; /* 添加过渡效果 */
+}
+  
+nav a:hover {
+    background-color: #f0f0f0; /* 鼠标悬停时背景色 */
+    border-color: #ddd; /* 鼠标悬停时边框色 */
+}
+  

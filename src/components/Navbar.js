@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';  // 使用 Link 进行导航
+import './Navbar.css'; // 引入 CSS 文件
 
 function Navbar({ cartCount }) {
   return (

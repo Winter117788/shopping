@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';  // 引入 useState 和 useEffect Hook
+import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';  // 引入商品卡片组件
+import './ShopPage.css'; // 引入 CSS 文件
 
 function ShopPage({ addToCart }) {
   const [products, setProducts] = useState([]);  // 用来存储商品数据
